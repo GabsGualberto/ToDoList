@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace ToDoList.Domain.Enum
 {
-    public enum TaskStatus
+    public enum AssignmentStatus
     {
-        Canceled = -1,
-        Backlog,
-        Doing,
-        Complete
+        Canceled,
+        InProgress,
+        Completed,
+        Late
     }
 }

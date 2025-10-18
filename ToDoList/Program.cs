@@ -1,4 +1,6 @@
 using ToDoList.Application;
+using ToDoList.Domain.Interfaces;
+using ToDoList.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +10,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddSingleton<IAssignmentRepository, AssigmentRepository>();
 
 builder.Services.AddMediatR(configuration => configuration.RegisterServicesFromAssembly(typeof(ApplicationMarker).Assembly));
 
