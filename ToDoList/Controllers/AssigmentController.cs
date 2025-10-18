@@ -26,5 +26,23 @@ namespace ToDoList.Controllers
         {
             return Ok();
         }
+
+        [HttpGet()]
+        public IActionResult GetAllAssignments()
+        {
+            return Ok();
+        }
+
+        [HttpPatch("{id}")]
+        public IActionResult UpdateAssignmentStatus(Guid id)
+        {
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteAssignment(Guid id)
+        {
+            return NoContent();
+        }
     }
 } 
