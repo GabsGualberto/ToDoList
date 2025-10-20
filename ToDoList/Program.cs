@@ -1,5 +1,7 @@
+using Microsoft.EntityFrameworkCore;
 using ToDoList.Application;
 using ToDoList.Domain.Interfaces;
+using ToDoList.Infrastructure.Configuration;
 using ToDoList.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,9 +12,13 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddSingleton<IAssignmentRepository, AssigmentRepository>();
 
 builder.Services.AddMediatR(configuration => configuration.RegisterServicesFromAssembly(typeof(ApplicationMarker).Assembly));
+
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(connectionString));
+builder.Services.AddScoped<IAssignmentRepository, AssigmentRepository>();
 
 builder.Services.AddSwaggerGen(configuration =>
 {
@@ -25,7 +31,21 @@ builder.Services.AddSwaggerGen(configuration =>
     configuration.AddServer(new Microsoft.OpenApi.Models.OpenApiServer()
     {
         Description = "Localhost",
-        Url = "https://localhost:5000/"
+        Url = "http://localhost:5000/"
+    });
+});
+
+builder.Services.AddCors(builder =>
+{
+    builder.AddPolicy("ApiCors", policy =>
+    {
+        policy
+        .WithOrigins("*")
+        .AllowAnyOrigin()
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+        .SetPreflightMaxAge(TimeSpan.MaxValue)
+        .Build();
     });
 });
 
@@ -43,5 +63,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseCors("ApiCors");
 
 app.Run();
