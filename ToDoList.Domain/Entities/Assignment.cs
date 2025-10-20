@@ -6,18 +6,18 @@ namespace ToDoList.Domain.Entities
     public class Assignment
     {
         public Guid Id { get; private set; }
-        public string? Name { get;  set; }
-        public string? Description { get;  set; }
+        public string Name { get; private set; }
+        public string Description { get; private set; }
         public AssignmentStatus Status { get; private set; }
         public Priority Priority { get; private set; }
         public DateTime CreatedAt { get; private set; } = DateTime.UtcNow;
-        public DateTime Deadline { get; private set; }
+        public DateTime? Deadline { get; private set; }
         public DateTime? ModifiedAt { get; private set; }
 
 
         public Assignment() { }
 
-        public Assignment(string name, Priority priority, DateTime deadline, string description)
+        public Assignment(string name, Priority priority, string description, DateTime? deadline)
         {
             Id = Guid.NewGuid();
             Name = name;
