@@ -26,8 +26,8 @@ dotnet tool install --global dotnet-ef
 ### 1. Clone o repositório:
 
 ```bash
-git clone https://seu-repositorio.com/todolist-api.git
-cd todolist-api
+git clone https://GabsGualberto/ToDoList.git
+cd todolist
 ```
 
 ### 2. Configure a String de Conexão
@@ -111,5 +111,3 @@ http://localhost:5000/swagger
 ```
 
 ---
-
-Feito com 💻 e .NET 8
